@@ -1,7 +1,20 @@
+#include <algorithm>
+#include <fstream>
 #include <iostream>
-using namespace std;
+#include <sstream>
+#include <string>
+#include <vector>
+#include "categories.hpp"
 
-int main() {
-    cout << "Hello from pipeline!" << endl;
-    return 0;
+struct post  
+{
+  std::string id,username,dialect,timestamp;
+  std::vector<std::string>categoriesHit;
+  int risk_score=0;
+  bool flagged=false;
+};
+
+static std::vector<std::string>parseCV(const std::string& line)
+{
+  std::vector<std::string>fields;
 }
