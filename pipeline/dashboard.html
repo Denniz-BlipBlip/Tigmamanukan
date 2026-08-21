@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sentinel PH - Analyst Dashboard (C++ Prototype)</title>
+</head>
+<body>
+
+<h1>Sentinel PH &mdash; Analyst Review Dashboard</h1>
+<p><i>C++ prototype. Stage 1 keyword trigger, then Stage 2 context scoring,
+then Stage 3 human review below. Runs entirely on synthetic sample data
+covering Tagalog, Cebuano, Ilocano, Hiligaynon, and Waray.</i></p>
+
+<h2>Summary</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr><th>Total posts processed</th><th>Stage 1 flagged</th><th>Final shortlist (Stage 3)</th></tr>
+<tr>
+<td align="center">20</td>
+<td align="center">14</td>
+<td align="center">13</td>
+</tr>
+</table>
+
+<h2>Analyst Review Queue (risk score &ge; 1)</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr>
+<th>User</th><th>Dialect</th><th>Post</th><th>Categories matched</th><th>Risk score</th><th>Analyst decision</th>
+</tr>
+<tr>
+<td>@user_501</td>
+<td>Ilocano</td>
+<td>Nabannogak la unay, awanen ti mangayat kaniak, mapukawakton la ngata.</td>
+<td>farewell_language, isolation_language</td>
+<td align="center"><b>2</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_503</td>
+<td>Waray</td>
+<td>Kapoy na ako hin duro, waray na nagmamahal ha akon, pahalipay na ako.</td>
+<td>farewell_language, isolation_language</td>
+<td align="center"><b>2</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_640</td>
+<td>Tagalog</td>
+<td>feeling ko wala nang paki sa akin, kung mawala man ako baka di rin mapansin</td>
+<td>farewell_language, isolation_language</td>
+<td align="center"><b>2</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_118</td>
+<td>Tagalog</td>
+<td>Sobrang stress ko sa school, pakiramdam ko wala akong silbi. Ayoko na talaga.</td>
+<td>grievance_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_204</td>
+<td>Cebuano</td>
+<td>Nakuyapan ko permi, wala nay ganahan nako sa kwarta o unsa.</td>
+<td>isolation_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_502</td>
+<td>Hiligaynon</td>
+<td>Nagplano ako sang isa ka butang, makita nila ini sa dam-an.</td>
+<td>leakage_of_intent</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_203</td>
+<td>Tagalog</td>
+<td>Grievance thread: everyone at this school will regret how they treated me. Wag kayo magulat pag may mangyari.</td>
+<td>grievance_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_355</td>
+<td>Tagalog</td>
+<td>sobrang init ng ulo ko sa mga tao dito, sana lang malaman nila pagsisisihan nila 'to</td>
+<td>grievance_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_610</td>
+<td>Cebuano</td>
+<td>Naa koy plano nga dako, makita ra nila unya, wag lang mo kalit.</td>
+<td>leakage_of_intent</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_620</td>
+<td>Ilocano</td>
+<td>Adda plano ko a dakkel, makitadanto la ti mapasamak.</td>
+<td>leakage_of_intent</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_812</td>
+<td>Tagalog</td>
+<td>nagre-research ako about parts, checking things out, may plano ako next week na malalaman nila lahat</td>
+<td>leakage_of_intent</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_630</td>
+<td>Ilocano</td>
+<td>Awan serserbik nga tao ditoy, agbabawidanto amin no adda mapasamak.</td>
+<td>grievance_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+<tr>
+<td>@user_640a</td>
+<td>Hiligaynon</td>
+<td>Wala sing gusto sa akon sini nga lugar, magabasol sila tanan.</td>
+<td>grievance_language</td>
+<td align="center"><b>1</b></td>
+<td>Pending / Dismiss / Monitor / Escalate</td>
+</tr>
+</table>
+
+<h2>Full Dataset (for transparency)</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<tr>
+<th>User</th><th>Dialect</th><th>Post</th><th>Stage 1 flagged</th><th>Categories matched</th><th>Risk score</th>
+</tr>
+<tr>
+<td>@user_042</td>
+<td>Tagalog</td>
+<td>Grabe ang init today, sino pa gustong maglaro basketball later?</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_118</td>
+<td>Tagalog</td>
+<td>Sobrang stress ko sa school, pakiramdam ko wala akong silbi. Ayoko na talaga.</td>
+<td align="center">Yes</td>
+<td>grievance_language</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_233</td>
+<td>Cebuano</td>
+<td>Grabe ka init karon, kinsa pa gusto magdula basketball ugma?</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_204</td>
+<td>Cebuano</td>
+<td>Nakuyapan ko permi, wala nay ganahan nako sa kwarta o unsa.</td>
+<td align="center">Yes</td>
+<td>isolation_language</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_501</td>
+<td>Ilocano</td>
+<td>Nabannogak la unay, awanen ti mangayat kaniak, mapukawakton la ngata.</td>
+<td align="center">Yes</td>
+<td>farewell_language, isolation_language</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td>@user_502</td>
+<td>Hiligaynon</td>
+<td>Nagplano ako sang isa ka butang, makita nila ini sa dam-an.</td>
+<td align="center">Yes</td>
+<td>leakage_of_intent</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_503</td>
+<td>Waray</td>
+<td>Kapoy na ako hin duro, waray na nagmamahal ha akon, pahalipay na ako.</td>
+<td align="center">Yes</td>
+<td>farewell_language, isolation_language</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td>@user_203</td>
+<td>Tagalog</td>
+<td>Grievance thread: everyone at this school will regret how they treated me. Wag kayo magulat pag may mangyari.</td>
+<td align="center">Yes</td>
+<td>grievance_language</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_090</td>
+<td>Tagalog</td>
+<td>anyone else obsessed with that new lyrics drop, 'gonna end it all tonight' hits different</td>
+<td align="center">Yes</td>
+<td>farewell_language</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_311</td>
+<td>Tagalog</td>
+<td>Nakakainis lang mag-isip, pero okay lang, kakausapin ko si mama mamaya</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_640</td>
+<td>Tagalog</td>
+<td>feeling ko wala nang paki sa akin, kung mawala man ako baka di rin mapansin</td>
+<td align="center">Yes</td>
+<td>farewell_language, isolation_language</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td>@user_733</td>
+<td>Tagalog</td>
+<td>just finished my project on national heroes, done na for the sem!</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_355</td>
+<td>Tagalog</td>
+<td>sobrang init ng ulo ko sa mga tao dito, sana lang malaman nila pagsisisihan nila 'to</td>
+<td align="center">Yes</td>
+<td>grievance_language</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_610</td>
+<td>Cebuano</td>
+<td>Naa koy plano nga dako, makita ra nila unya, wag lang mo kalit.</td>
+<td align="center">Yes</td>
+<td>leakage_of_intent</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_620</td>
+<td>Ilocano</td>
+<td>Adda plano ko a dakkel, makitadanto la ti mapasamak.</td>
+<td align="center">Yes</td>
+<td>leakage_of_intent</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_009</td>
+<td>Tagalog</td>
+<td>shoutout sa mga kaklase ko sobrang saya ng field trip natin kanina</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_812</td>
+<td>Tagalog</td>
+<td>nagre-research ako about parts, checking things out, may plano ako next week na malalaman nila lahat</td>
+<td align="center">Yes</td>
+<td>leakage_of_intent</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_290</td>
+<td>Tagalog</td>
+<td>ang saya ng bonding namin ng barkada ngayon, miss ko sila</td>
+<td align="center">No</td>
+<td></td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td>@user_630</td>
+<td>Ilocano</td>
+<td>Awan serserbik nga tao ditoy, agbabawidanto amin no adda mapasamak.</td>
+<td align="center">Yes</td>
+<td>grievance_language</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td>@user_640a</td>
+<td>Hiligaynon</td>
+<td>Wala sing gusto sa akon sini nga lugar, magabasol sila tanan.</td>
+<td align="center">Yes</td>
+<td>grievance_language</td>
+<td align="center">1</td>
+</tr>
+</table>
+
+<p><small>This is a non-functional prototype for demonstration purposes
+only. It uses synthetic sample data and a simplified rule-\ based scoring
+system covering five Philippine languages/dialects. No real accounts, real
+posts, or real individuals are involved. This page uses no CSS and no
+JavaScript &mdash; it is regenerated fresh by pipeline.cpp on every run, at
+a fixed review threshold of risk score &ge; 1.</small></p>
+
+</body>
+</html>
